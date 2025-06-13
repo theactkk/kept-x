@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEPT X Online Courses - แบบฟอร์มสมัคร</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffe8d6; /* Light orange background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .form-container {
+            background-color: #fff;
+            padding: 2.5rem;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+            max-width: 800px;
+            width: 100%;
+            border: 2px solid #ffcc80; /* Light orange border */
+        }
+        h1 {
+            color: #ff8c00; /* Darker orange for heading */
+            font-size: 2.5rem; /* Larger heading */
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        h2 {
+            color: #ff9900; /* Orange for sub-heading */
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+            font-size: 1rem;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ffcc80; /* Light orange border for inputs */
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            color: #333;
+            transition: all 0.3s ease;
+            box-sizing: border-box; /* Ensure padding doesn't increase width */
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff8c00; /* Darker orange on focus */
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2); /* Soft glow on focus */
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .checkbox-group {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+            background-color: #fff3e0; /* Lighter orange for checkbox background */
+            border-radius: 1rem;
+            border: 1px dashed #ffb366; /* Dashed border for visual separation */
+        }
+        .checkbox-group input[type="checkbox"] {
+            margin-right: 0.75rem;
+            transform: scale(1.2); /* Slightly larger checkbox */
+        }
+        .privacy-link {
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .privacy-link:hover {
+            color: #0056b3;
+        }
+        .icon {
+            margin-right: 0.5rem;
+            color: #ff8c00; /* Orange icon color */
+        }
+        .submit-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background-color: #ff8c00; /* Prominent orange button */
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 5px 10px rgba(255, 140, 0, 0.3);
+            margin-top: 2rem;
+        }
+        .submit-button:hover {
+            background-color: #e67300; /* Darker orange on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+        .submit-button:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 5px rgba(255, 140, 0, 0.3);
+        }
+        #thankYouMessage {
+            display: none; /* Hidden by default */
+            margin-top: 2rem;
+            padding: 2rem;
+            background-color: #e0ffe0; /* Light green for success message */
+            border: 2px solid #66bb6a; /* Green border */
+            border-radius: 1rem;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 5px 10px rgba(102, 187, 106, 0.2);
+        }
+        #thankYouMessage h3 {
+            color: #2e7d32; /* Dark green heading */
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        #thankYouMessage p {
+            margin-bottom: 0.75rem;
+            line-height: 1.6;
+        }
+        #thankYouMessage strong {
+            color: #2e7d32;
+        }
+        .line-link {
+            color: #00b900; /* LINE green color */
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        .line-link:hover {
+            color: #008f00;
+        }
+        .social-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        .social-checkboxes label {
+            display: flex;
+            align-items: center;
+            background-color: #fff8f0; /* Very light orange for checkbox background */
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #ffcc80;
+            cursor: pointer;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            font-weight: 500;
+        }
+        .social-checkboxes label:hover {
+            background-color: #fff0e0;
+            border-color: #ffb366;
+        }
+        .social-checkboxes input[type="checkbox"] {
+            margin-right: 0.5rem;
+            transform: scale(1.1);
+        }
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .form-group {
+                margin-bottom: 1rem;
+            }
+            label {
+                font-size: 0.9rem;
+            }
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            textarea,
+            select {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            .submit-button {
+                padding: 0.8rem;
+                font-size: 1.1rem;
+            }
+            #thankYouMessage {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>KEPT X Online Courses<br>ทางลัด ปั้นคะแนน ติดพอร์ตแพทย์ มข.</h1>
+        <h2><i class="fas fa-graduation-cap icon"></i> แบบฟอร์มสมัครเข้าร่วมติว <i class="fas fa-book icon"></i></h2>
+
+        <form id="admissionForm" onsubmit="submitForm(event)">
+            <!-- Acceptance Checkbox -->
+            <div class="form-group checkbox-group">
+                <label class="flex items-center text-base">
+                    <input type="checkbox" id="acceptTerms" name="acceptTerms" required class="form-checkbox">
+                    <span class="text-gray-700">
+                        ข้าพเจ้าได้ทำความเข้าใจรายละเอียดค่าย และมีความประสงค์จะกรอกข้อมูลเพื่อสมัครติวครั้งนี้
+                        <a href="https://www.theactkk.net/%E0%B8%99%E0%B9%82%E0%B8%A2%E0%B8%9A%E0%B8%B2%E0%B8%A2%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%9B%E0%B9%87%E0%B8%99%E0%B8%AA%E0%B9%88%E0%B8%A7%E0%B8%99%E0%B8%95%E0%B8%B1%E0%B8%A7" target="_blank" class="privacy-link">อ่านนโยบายความเป็นส่วนตัว</a>
+                    </span>
+                </label>
+            </div>
+
+            <!-- Pre-title Dropdown -->
+            <div class="form-group">
+                <label for="prefix"><i class="fas fa-user icon"></i> คำนำหน้า:</label>
+                <select id="prefix" name="prefix" required>
+                    <option value="">-- เลือกคำนำหน้า --</option>
+                    <option value="เด็กชาย">เด็กชาย</option>
+                    <option value="เด็กหญิง">เด็กหญิง</option>
+                    <option value="นาย">นาย</option>
+                    <option value="นางสาว">นางสาว</option>
+                </select>
+            </div>
+
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="fullName"><i class="fas fa-signature icon"></i> ชื่อ - นามสกุล:</label>
+                <input type="text" id="fullName" name="fullName" placeholder="ชื่อ-นามสกุล ของผู้สมัคร" required>
+            </div>
+
+            <!-- Nickname -->
+            <div class="form-group">
+                <label for="nickname"><i class="fas fa-user-tag icon"></i> ชื่อเล่น:</label>
+                <input type="text" id="nickname" name="nickname" placeholder="ชื่อเล่น" required>
+            </div>
+
+            <!-- Grade Level -->
+            <div class="form-group">
+                <label for="grade"><i class="fas fa-chart-bar icon"></i> ระดับชั้น:</label>
+                <select id="grade" name="grade" required>
+                    <option value="">-- เลือกระดับชั้น --</option>
+                    <option value="ม.1">ม.1</option>
+                    <option value="ม.2">ม.2</option>
+                    <option value="ม.3">ม.3</option>
+                    <option value="ม.4">ม.4</option>
+                    <option value="ม.5">ม.5</option>
+                    <option value="ม.6">ม.6</option>
+                </select>
+            </div>
+
+            <!-- School Name -->
+            <div class="form-group">
+                <label for="schoolName"><i class="fas fa-school icon"></i> โรงเรียน:</label>
+                <input type="text" id="schoolName" name="schoolName" placeholder="ชื่อโรงเรียนที่กำลังศึกษา" required>
+            </div>
+
+            <!-- School Province -->
+            <div class="form-group">
+                <label for="schoolProvince"><i class="fas fa-map-marker-alt icon"></i> จังหวัดที่ตั้งโรงเรียน:</label>
+                <input type="text" id="schoolProvince" name="schoolProvince" placeholder="จังหวัดที่ตั้งของโรงเรียน" required>
+            </div>
+
+            <!-- Applicant Phone -->
+            <div class="form-group">
+                <label for="applicantPhone"><i class="fas fa-phone-alt icon"></i> เบอร์ติดต่อผู้สมัคร:</label>
+                <input type="tel" id="applicantPhone" name="applicantPhone" placeholder="เบอร์โทรศัพท์มือถือที่สามารถติดต่อได้" pattern="[0-9]{10}" title="กรุณากรอกเบอร์โทรศัพท์ 10 หลัก" required>
+            </div>
+
+            <!-- Parent Phone -->
+            <div class="form-group">
+                <label for="parentPhone"><i class="fas fa-phone-square-alt icon"></i> เบอร์ติดต่อผู้ปกครอง:</label>
+                <input type="tel" id="parentPhone" name="parentPhone" placeholder="เบอร์โทรศัพท์ผู้ปกครอง" pattern="[0-9]{10}" title="กรุณากรอกเบอร์โทรศัพท์ 10 หลัก" required>
+            </div>
+
+            <!-- Applicant Email -->
+            <div class="form-group">
+                <label for="applicantEmail"><i class="fas fa-envelope icon"></i> อีเมลผู้สมัครเพื่อรับไฟล์เอกสารติว (แนะนำเป็น Gmail เท่านั้น):</label>
+                <input type="email" id="applicantEmail" name="applicantEmail" placeholder="email@gmail.com" required>
+            </div>
+
+            <!-- LINE ID -->
+            <div class="form-group">
+                <label for="lineId"><i class="fab fa-line icon"></i> LINE ID ผู้สมัคร:</label>
+                <input type="text" id="lineId" name="lineId" placeholder="LINE ID" required>
+            </div>
+
+            <!-- Desired Faculty -->
+            <div class="form-group">
+                <label for="desiredFaculty"><i class="fas fa-user-graduate icon"></i> คณะ/สาขาที่อยากเข้าเรียน:</label>
+                <select id="desiredFaculty" name="desiredFaculty" required>
+                    <option value="">-- เลือกคณะ/สาขา --</option>
+                    <option value="คณะแพทยศาสตร์">คณะแพทยศาสตร์</option>
+                    <option value="คณะทันตแพทยศาสตร์">คณะทันตแพทยศาสตร์</option>
+                    <option value="คณะเภสัชศาสตร์">คณะเภสัชศาสตร์</option>
+                    <option value="คณะสัตวแพทยศาสตร์">คณะสัตวแพทยศาสตร์</option>
+                    <option value="คณะเทคนิคการแพทย์">คณะเทคนิคการแพทย์</option>
+                    <option value="คณะพยาบาลศาสตร์">คณะพยาบาลศาสตร์</option>
+                    <option value="คณะสาธารณสุขศาสตร์">คณะสาธารณสุขศาสตร์</option>
+                    <option value="คณะวิทยาศาสตร์">คณะวิทยาศาสตร์</option>
+                    <option value="คณะวิศวกรรมศาสตร์">คณะวิศวกรรมศาสตร์</option>
+                    <option value="คณะเกษตรศาสตร์">คณะเกษตรศาสตร์</option>
+                    <option value="คณะเทคโนโลยี">คณะเทคโนโลยี</option>
+                    <option value="คณะสถาปัตยกรรมศาสตร์">คณะสถาปัตยกรรมศาสตร์</option>
+                    <option value="คณะศึกษาศาสตร์">คณะศึกษาศาสตร์</option>
+                    <option value="คณะมนุษยศาสตร์และสังคมศาสตร์">คณะมนุษยศาสตร์และสังคมศาสตร์</option>
+                    <option value="คณะนิติศาสตร์">คณะนิติศาสตร์</option>
+                    <option value="คณะบริหารธุรกิจและการบัญชี">คณะบริหารธุรกิจและการบัญชี</option>
+                    <option value="คณะเศรษฐศาสตร์">คณะเศรษฐศาสตร์</option>
+                    <option value="คณะศิลปกรรมศาสตร์">คณะศิลปกรรมศาสตร์</option>
+                    <option value="คณะวิทยาการสารสนเทศ">คณะวิทยาการสารสนเทศ</option>
+                    <option value="คณะวิทยาการจัดการ">คณะวิทยาการจัดการ</option>
+                    <option value="วิทยาลัยการปกครองท้องถิ่น">วิทยาลัยการปกครองท้องถิ่น</option>
+                    <option value="วิทยาลัยนานาชาติ">วิทยาลัยนานาชาติ</option>
+                    <option value="วิทยาลัยการคอมพิวเตอร์">วิทยาลัยการคอมพิวเตอร์</option>
+                    <option value="คณะสหวิทยาการ (วิทยาเขตหนองคาย)">คณะสหวิทยาการ (วิทยาเขตหนองคาย)</option>
+                </select>
+            </div>
+
+            <!-- Latest GPA -->
+            <div class="form-group">
+                <label for="gpa"><i class="fas fa-star icon"></i> เกรดเฉลี่ยเทอมล่าสุด:</label>
+                <input type="text" id="gpa" name="gpa" placeholder="เช่น 3.50" required>
+            </div>
+
+            <!-- Document Type Preference -->
+            <div class="form-group">
+                <label for="documentType"><i class="fas fa-file-alt icon"></i> เลือกรับเอกสารติว:</label>
+                <select id="documentType" name="documentType" required>
+                    <option value="">-- เลือกรูปแบบเอกสาร --</option>
+                    <option value="แบบเล่ม - ชีท">แบบเล่ม - ชีท</option>
+                    <option value="แบบไฟล์ - PDF">แบบไฟล์ - PDF</option>
+                </select>
+            </div>
+
+            <!-- Address -->
+            <div class="form-group">
+                <label for="address"><i class="fas fa-home icon"></i> ที่อยู่:</label>
+                <input type="text" id="address" name="address" placeholder="บ้านเลขที่, ถนน, ซอย" required>
+            </div>
+            
+            <!-- Sub-district, District, Province -->
+            <div class="form-group">
+                <label for="subDistrict"><i class="fas fa-map-marked-alt icon"></i> ตำบล:</label>
+                <input type="text" id="subDistrict" name="subDistrict" placeholder="ตำบล" required>
+            </div>
+            <div class="form-group">
+                <label for="district"><i class="fas fa-map-marked-alt icon"></i> อำเภอ:</label>
+                <input type="text" id="district" name="district" placeholder="อำเภอ" required>
+            </div>
+            <div class="form-group">
+                <label for="province"><i class="fas fa-map-marked-alt icon"></i> จังหวัด (ที่อยู่):</label>
+                <input type="text" id="province" name="province" placeholder="จังหวัด" required>
+            </div>
+
+            <!-- Postal Code -->
+            <div class="form-group">
+                <label for="postalCode"><i class="fas fa-mail-bulk icon"></i> รหัสไปรษณีย์:</label>
+                <input type="text" id="postalCode" name="postalCode" placeholder="รหัสไปรษณีย์ 5 หลัก" pattern="[0-9]{5}" title="กรุณากรอกรหัสไปรษณีย์ 5 หลัก" required>
+            </div>
+
+            <!-- Preferred Contact Time -->
+            <div class="form-group">
+                <label for="contactTime"><i class="fas fa-clock icon"></i> ช่วงเวลาที่สะดวกให้ติดต่อกลับ:</label>
+                <select id="contactTime" name="contactTime" required>
+                    <option value="">-- เลือกช่วงเวลา --</option>
+                    <option value="9.00 น.">9.00 น.</option>
+                    <option value="10.00 น.">10.00 น.</option>
+                    <option value="11.00 น.">11.00 น.</option>
+                    <option value="12.00 น.">12.00 น.</option>
+                    <option value="13.00 น.">13.00 น.</option>
+                    <option value="14.00 น.">14.00 น.</option>
+                    <option value="15.00 น.">15.00 น.</option>
+                    <option value="16.00 น.">16.00 น.</option>
+                    <option value="17.00 น.">17.00 น.</option>
+                    <option value="18.00 น.">18.00 น.</option>
+                    <option value="19.00 น.">19.00 น.</option>
+                </select>
+            </div>
+
+            <!-- Expectations from Tutoring -->
+            <div class="form-group">
+                <label for="expectations"><i class="fas fa-lightbulb icon"></i> ความคาดหวังในการติวกับ The Act ในครั้งนี้:</label>
+                <textarea id="expectations" name="expectations" placeholder="กรุณาอธิบายความคาดหวังของคุณให้ละเอียดที่สุด" rows="4"></textarea>
+            </div>
+
+            <!-- How did you hear about us? -->
+            <div class="form-group">
+                <label><i class="fas fa-question-circle icon"></i> คุณรู้จักค่ายติว The Act ผ่านช่องทางใดบ้าง? (เลือกได้หลายข้อ)</label>
+                <div class="social-checkboxes">
+                    <label><input type="checkbox" name="howDidYouHear[]" value="Facebook"> Facebook</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="TikTok"> TikTok</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="Line OA"> Line OA</label>
+                    <label><input type="checkbox" name="howDidYouhear[]" value="เพื่อนแนะนำ"> เพื่อนแนะนำ</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="ครูแนะนำ"> ครูแนะนำ</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="โฆษณาออนไลน์"> โฆษณาออนไลน์</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="เว็บไซต์ The Act"> เว็บไซต์ The Act</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="Instagram"> Instagram</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="Twitter"> Twitter</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="Youtube"> Youtube</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="ผู้ปกครองแนะนำ"> ผู้ปกครองแนะนำ</label>
+                    <label><input type="checkbox" name="howDidYouHear[]" value="รุ่นพี่แนะนำ"> รุ่นพี่แนะนำ</label>
+                    <label class="flex-grow"><input type="checkbox" name="howDidYouHear[]" value="อื่นๆ"> อื่น ๆ (กรุณาระบุ): <input type="text" name="otherSource" class="ml-2 flex-grow border-b-2 border-gray-300 focus:border-orange-500 rounded-none p-1 text-sm"></label>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-button">
+                <i class="fas fa-paper-plane icon"></i> ส่งใบสมัคร
+            </button>
+        </form>
+
+        <!-- Thank You Message (hidden by default) -->
+        <div id="thankYouMessage" class="thank-you-message">
+            <h3><i class="fas fa-check-circle icon"></i> The Act. ได้รับข้อมูลการสมัครติวของน้องเรียบร้อย</h3>
+            <p>กรุณาโอนชำระเงินค่าสมัคร <strong>ภายใน 48 ชม.</strong> เพื่อให้การสมัครจองเสร็จสมบูรณ์</p>
+            <p><strong>บัญชี:</strong> โรงเรียนกวดวิชาดิแอ๊ค</p>
+            <p><strong>ธนาคาร:</strong> กสิกรไทย</p>
+            <p><strong>เลขบัญชี:</strong> 1452668420</p>
+            <p><strong>พร้อมเพย์:</strong> 0630926225</p>
+            <p><strong>แจ้งโอนสมัครติว The Act.</strong></p>
+            <p>
+                ให้น้องส่งหลักฐาน/สลิป, ชื่อ-สกุล, เบอร์มือถือที่สมัครติว ไปที่ไลน์สถาบัน Line Official
+                <a href="https://page.line.me/theactkk" target="_blank" class="line-link">คลิ๊ก</a>
+            </p>
+            <p>หรือ แอดไลน์ไอดี <strong>@theactkk</strong> (มี @ ด้วยนะ) เพื่อให้พี่แอดมินไลน์ช่วยตรวจสอบข้อมูลการชำระเงิน</p>
+            <p class="mt-4"><strong>>> สอบถามพี่ทีมงาน <<</strong></p>
+            <p>
+                <i class="fas fa-phone-alt icon"></i> พี่แผน: 086-455-9190<br>
+                <i class="fas fa-phone-alt icon"></i> พี่ปุ้ย: 066-109-6725<br>
+                <i class="fas fa-phone-alt icon"></i> พี่เฟื่อง: 066-109-6325<br>
+                <i class="fas fa-phone-alt icon"></i> พี่ปุ้มปุ้ย: 081-545-0716<br>
+                <i class="fas fa-phone-alt icon"></i> พี่ดุ่ย: 088-564-2554
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // *** สำคัญ: ตั้งค่า URL ของ Google Apps Script ที่นี่ ***
+        // คุณจะต้องสร้าง Google Apps Script เพื่อเป็นตัวกลางในการส่งข้อมูลไปยัง Google Sheet
+        // ดูคำแนะนำด้านล่างในส่วน "วิธีการเชื่อมฟอร์มกับ Google Sheet"
+        const GOOGLE_SHEET_FORM_URL = 'https://script.google.com/macros/s/AKfycbyHlXKDUA2FGGIiiyspAzj4rBEgvhd67HCeT9dbEvmVQzBTIzCLd92O2znwIT5gE93H/exec'; // <-- เปลี่ยนตรงนี้!
+
+        async function submitForm(event) {
+            event.preventDefault(); // ป้องกันการรีโหลดหน้าเว็บ
+
+            const form = document.getElementById('admissionForm');
+            const thankYouMessage = document.getElementById('thankYouMessage');
+            const submitButton = form.querySelector('.submit-button');
+
+            // ตรวจสอบว่าเช็คบ็อกซ์ยอมรับเงื่อนไขถูกเลือกหรือไม่
+            if (!document.getElementById('acceptTerms').checked) {
+                alert('กรุณากดยอมรับเงื่อนไขเพื่อดำเนินการต่อ'); // ใช้ alert() ชั่วคราวสำหรับการแจ้งเตือนง่ายๆ
+                return;
+            }
+
+            submitButton.disabled = true; // ปิดการใช้งานปุ่มเพื่อป้องกันการส่งซ้ำ
+            submitButton.textContent = 'กำลังส่ง...'; // เปลี่ยนข้อความปุ่ม
+
+            // รวบรวมข้อมูลจากฟอร์ม
+            const formData = new FormData(form);
+            const data = {};
+            for (let [key, value] of formData.entries()) {
+                if (key === 'howDidYouHear[]') {
+                    // สำหรับช่องทำเครื่องหมายได้หลายข้อ
+                    if (!data[key]) {
+                        data[key] = [];
+                    }
+                    data[key].push(value);
+                } else if (key === 'otherSource' && value.trim() !== '') {
+                     // หาก 'อื่นๆ' ถูกเลือกและมีการระบุข้อความ
+                    const howDidYouHearArray = data['howDidYouHear[]'] || [];
+                    if (howDidYouHearArray.includes('อื่นๆ')) {
+                        const otherIndex = howDidYouHearArray.indexOf('อื่นๆ');
+                        howDidYouHearArray[otherIndex] = `อื่นๆ: ${value.trim()}`;
+                    }
+                    data[key] = value.trim(); // เก็บค่าอื่นๆ แยกไว้
+                }
+                else {
+                    data[key] = value;
+                }
+            }
+
+            // จัดการ HowDidYouHear ให้เป็นสตริงเดียวสำหรับ Google Sheet
+            if (data['howDidYouHear[]']) {
+                data['howDidYouHear'] = data['howDidYouHear[]'].join(', ');
+                delete data['howDidYouHear[]']; // ลบ array ต้นฉบับ
+            }
+
+
+            // เพิ่ม timestamp
+            data['timestamp'] = new Date().toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+
+            try {
+                // ส่งข้อมูลไปยัง Google Apps Script
+                const response = await fetch(GOOGLE_SHEET_FORM_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // สำคัญมากสำหรับ Google Apps Script เพื่อหลีกเลี่ยง CORS
+                    headers: {
+                        'Content-Type': 'application/json', // บอกว่าเป็น JSON
+                    },
+                    body: JSON.stringify(data) // ส่งข้อมูลเป็น JSON
+                });
+
+                // การใช้ mode: 'no-cors' จะทำให้ response.ok เป็น false เสมอ
+                // และไม่สามารถอ่าน response body ได้โดยตรง ดังนั้นเราจะถือว่าสำเร็จหากไม่มีข้อผิดพลาด
+                // และไม่มีการ throw error ในบล็อก try/catch
+                console.log('Form submission successful (assuming Google Apps Script processed it)');
+                form.reset(); // ล้างข้อมูลในฟอร์ม
+                form.style.display = 'none'; // ซ่อนฟอร์ม
+                thankYouMessage.style.display = 'block'; // แสดงข้อความขอบคุณ
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('เกิดข้อผิดพลาดในการส่งใบสมัคร กรุณาลองใหม่อีกครั้ง');
+            } finally {
+                submitButton.disabled = false; // เปิดการใช้งานปุ่มกลับ
+                submitButton.textContent = 'ส่งใบสมัคร'; // คืนข้อความปุ่ม
+            }
+        }
+    </script>
+</body>
+</html>

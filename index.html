@@ -198,20 +198,6 @@
                 </li>
             </ul>
 
-            <h4 class="section-title text-xl mt-6">รูปแบบการเรียน & ตารางเรียน</h4>
-            <ul>
-                <li><span class="icon">📍</span> เรียนสดผ่าน ZOOM</li>
-                <li><span class="icon">🗓️</span> Week 1: <strong>14–15–16 ก.ค. 68</strong></li>
-                <li><span class="icon">🗓️</span> Week 2: <strong>21–22–23 ก.ค. 68</strong></li>
-                <li><span class="icon">🕠</span> เวลา: <strong>18.30 – 21.30 น.</strong> (หลังเลิกเรียน ไม่ชนเวลาโรงเรียน)</li>
-                <li><span class="icon">🎥</span> มีคลิปย้อนหลังให้ทบทวนได้ 60 วัน
-                    <ul>
-                        <li>→ เหมาะกับคนเรียนไม่ทัน / อยากกลับมาทบทวนบ่อยๆ</li>
-                    </ul>
-                </li>
-                <li><span class="icon">📄</span> ฟรี! เอกสารประกอบการเรียน (ชีท / PDF)</li>
-            </ul>
-
             <h4 class="section-title text-xl mt-6">ค่าเรียน & โปรโมชั่น</h4>
             <ul>
                 <li><span class="icon">💥</span> สมัครคนเดียว = <strong>2,900 บาท</strong> (จากปกติ 4,500)</li>
@@ -494,11 +480,14 @@
             // Function to update friend name fields dynamically
             function updateFriendFields() {
                 const num = parseInt(numApplicantsSelect.value);
-                friendNamesContainer.innerHTML = '<p class="text-orange-700 font-semibold mb-3">กรุณากรอกชื่อเพื่อนที่ร่วมสมัคร:</p>'; // Clear previous fields
+                // Clear previous fields and add the header text
+                friendNamesContainer.innerHTML = '<p class="text-orange-700 font-semibold mb-3">กรุณากรอกชื่อเพื่อนที่ร่วมสมัคร:</p>'; 
+                
                 if (num > 1) {
                     friendNamesContainer.classList.remove('hidden');
                     for (let i = 1; i < num; i++) {
                         const div = document.createElement('div');
+                        // ใช้ `name` attribute ที่ตรงกับชื่อคอลัมน์ใน Google Sheet (e.g., 'ชื่อ-นามสกุล เพื่อนคนที่ 1')
                         div.innerHTML = `
                             <label for="friendName${i}" class="block text-gray-700 text-sm font-medium mb-2">ชื่อ - นามสกุล เพื่อนคนที่ ${i} <span class="text-red-500">*</span></label>
                             <input type="text" id="friendName${i}" name="ชื่อ-นามสกุล เพื่อนคนที่ ${i}" class="input-field" placeholder="ตัวอย่าง: ${i === 1 ? 'สมหญิง ใจดี' : 'สมชาย ดีใจ'}" required>
@@ -539,7 +528,7 @@
                 }
             });
 
-            // Initial state check for dynamic fields
+            // Initial state check for dynamic fields on page load
             updateFriendFields();
             updateAddressFields();
 
@@ -579,29 +568,26 @@
                     }
                 }
 
-                // Handle "Other" channel input
+                // Handle "Other" channel input if checkbox is checked and value exists
                 if (otherChannelCheckbox.checked && document.getElementById('otherChannel').value) {
-                    if (Array.isArray(data['ช่องทางที่รู้จัก'])) {
-                        data['ช่องทางที่รู้จัก'].push(`อื่นๆ: ${document.getElementById('otherChannel').value}`);
-                    } else if (data['ช่องทางที่รู้จัก']) {
-                        data['ช่องทางที่รู้จัก'] = [data['ช่องทางที่รู้จัก'], `อื่นๆ: ${document.getElementById('otherChannel').value}`];
-                    } else {
-                        data['ช่องทางที่รู้จัก'] = [`อื่นๆ: ${document.getElementById('otherChannel').value}`];
-                    }
-                    delete data['ช่องทางที่รู้จัก_อื่นๆ']; // Remove the separate "other" field
+                    // The Apps Script expects 'ช่องทางที่รู้จัก_อื่นๆ' as a separate field, so we ensure it's captured
+                    // If 'ช่องทางที่รู้จัก' (the main checkbox group) is also present, it's fine.
+                    // The Apps Script will handle combining/parsing.
                 } else if (!otherChannelCheckbox.checked && data['ช่องทางที่รู้จัก_อื่นๆ']) {
-                    delete data['ช่องทางที่รู้จัก_อื่นๆ']; // Ensure it's removed if checkbox isn't checked
+                    // If 'Other' checkbox is not checked but somehow the field had value, clear it.
+                    delete data['ช่องทางที่รู้จัก_อื่นๆ']; 
                 }
 
-                // Convert array values to comma-separated strings for Google Sheet
+                // Convert array values (like 'ช่องทางที่รู้จัก') to comma-separated strings for Google Sheet
+                // This is a safety measure; Apps Script also handles it, but doing it here is fine.
                 for (const key in data) {
                     if (Array.isArray(data[key])) {
                         data[key] = data[key].join(', ');
                     }
                 }
 
-                // ** IMPORTANT: Replace 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' with your actual deployed Apps Script URL **
-                const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycbz_ZbBD6k1Quu1t-zUyV8JY6364w3G3snQWI8J8QiwMTsSPSunv-4ygp3CBKnEH9lD2/exec'; // Placeholder URL
+                // *** สำคัญ: แทนที่ 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' ด้วย URL ของ Web App ของคุณ ***
+                const googleAppsScriptURL = 'https://script.google.com/macros/s/AKfycbzlTnS0pBYvIUufS2FBUX4vY5-UKLIt_zQqGNrLi2p8eHPuVnSgSNzRdRLnS-aIsrE/exec'; // Placeholder URL
 
                 // Show loading indicator
                 const submitButton = form.querySelector('button[type="submit"]');
@@ -611,17 +597,16 @@
                 try {
                     const response = await fetch(googleAppsScriptURL, {
                         method: 'POST',
-                        mode: 'no-cors', // Important for Google Apps Script
+                        mode: 'no-cors', // Important for Google Apps Script to work correctly
                         headers: {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify(data),
                     });
 
-                    // Even with no-cors, we can check if fetch was successful at a basic level
-                    // For true success confirmation, the Apps Script would need to send a specific response
-                    // which is not possible with no-cors. However, this is the standard way to submit.
-                    console.log('Form submission response (no-cors):', response);
+                    // Due to 'no-cors', we cannot directly read the response status/content from Apps Script
+                    // We assume success here and show the success message.
+                    console.log('Form submission initiated (no-cors). Check Apps Script logs for details.');
 
                     form.classList.add('hidden'); // Hide the form
                     successMessage.classList.remove('hidden'); // Show success message
